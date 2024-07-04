@@ -11,6 +11,7 @@ jobs:
         MY_VAR: Hi there! My name is
         FIRST_NAME: Skyler
         LAST_NAME: Wang
+        MY_SECRET: ${{ secrets.SS_SECRETS }}
       run: |
-        echo $MY_VAR $FIRST_NAME $LAST_NAME.
+        echo $MY_VAR $FIRST_NAME $LAST_NAME. $MY_SECRET
 

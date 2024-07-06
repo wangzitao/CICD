@@ -14,4 +14,6 @@ jobs:
         MY_SECRET: ${{ secrets.SS_SECRETS }}
       run: |
         echo $MY_VAR $FIRST_NAME $LAST_NAME. $MY_SECRET
+    - name: Check out code
+      uses: actions/checkout@v2
 

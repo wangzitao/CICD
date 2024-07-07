@@ -15,7 +15,6 @@ jobs:
       run: |
         echo $MY_VAR $FIRST_NAME $LAST_NAME. $MY_SECRET
     - name: Checkout/Update latest version
-        id: check_file
         run: |
           if [ -f "~/sswang/action-runner/_work/GithubActionTest/GithubActionTest/test.txt" ]; then
             echo "File exists, no need to checkout another repo."

@@ -8,16 +8,37 @@ jobs:
     steps:
     - name: Print a greeting
       env:
-        MY_VAR: Hi there! My name is
+        MY_VAR: Hi there!
         FIRST_NAME: Skyler
         LAST_NAME: Wang
         MY_SECRET: ${{ secrets.SS_SECRETS }}
       run: |
         echo $MY_VAR $FIRST_NAME $LAST_NAME. $MY_SECRET
-    - name: Check out code
-      uses: actions/checkout@v2
+    - name: Checkout/Update latest version
+        id: check_file
+        run: |
+          if [ -f "~/sswang/action-runner/_work/GithubActionTest/GithubActionTest/test.txt" ]; then
+            echo "File exists, no need to checkout another repo."
+            echo "::set-output name=file_exists::true"
+          else
+            echo "File does not exist, will checkout another repo."
+            echo "::set-output name=file_exists::false"
+          fi
+      - name: Checkout repository if file does not exist
+        if: ${{ steps.check_file.outputs.file_exists != 'true' }}
+        run: |
+          echo "Performing checkout"
+        uses: actions/checkout@v2
+        with:
+          repository: wangzitao/GithubActionTest
+          path:Storage
+      - name: Perform pull if directory exists
+        if: steps.check_dir.outputs.dir_exists == 'true'
+        run: |
+          echo "Performing git pull..."
+          git pull
     - name: List file
       run: |
         REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d'/' -f2)
-        ls /Users/runner/work/$REPO_NAME/$REPO_NAME
+        ls /Users/runner/_work/$REPO_NAME/$REPO_NAME
 

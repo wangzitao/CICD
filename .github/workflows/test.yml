@@ -14,7 +14,8 @@ jobs:
         MY_SECRET: ${{ secrets.SS_SECRETS }}
       run: |
         echo $MY_VAR $FIRST_NAME $LAST_NAME. $MY_SECRET
-    - name: Checkout_file
+    - name: Check_file
+      id: check_file
       run: |
         if [ -f "~/actions-runner/_work/GithubActionTest/GithubActionTest/ReadME" ]; then
             echo "File exists, no need to checkout another repo."
@@ -24,15 +25,15 @@ jobs:
             echo "::set-output name=file_exists::false"
         fi
     - name: Notifi checkout
-      if: ${{ steps.Checkout_file.outputs.file_exists != 'true' }}
+      if: ${{ steps.check_file.outputs.file_exists != 'true' }}
       run: |
         echo "Performing git checkout..."
-    - name: Checkout repository(file does not exist)
+    - name: Checkout repo
       if: ${{ steps.check_file.outputs.file_exists != 'true' }}
       uses: actions/checkout@v2
       with:
         repository: wangzitao/GithubActionTest
-        path: repo
+        path: .
     - name: Perform pull if directory exists
       if: steps.check_dir.outputs.dir_exists == 'true'
       run: |

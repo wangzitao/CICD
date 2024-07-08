@@ -16,7 +16,7 @@ jobs:
         echo $MY_VAR $FIRST_NAME $LAST_NAME. $MY_SECRET
     - name: Checkout Update latest version
       run: |
-        if [ -f "~/actions-runner/_work/GithubActionTest/GithubActionTest/test.txt" ]; then
+        if [ -f "~/actions-runner/_work/GithubActionTest/GithubActionTest/ReadME" ]; then
             echo "File exists, no need to checkout another repo."
             echo "::set-output name=file_exists::true"
         else
@@ -26,7 +26,7 @@ jobs:
     - name: Notifi checkout
       if: ${{ steps.check_file.outputs.file_exists != 'true' }}
       run: |
-        echo "begin checkout..."
+        echo "Performing git checkout..."
     - name: Checkout repository(file does not exist)
       if: ${{ steps.check_file.outputs.file_exists != 'true' }}
       uses: actions/checkout@v2

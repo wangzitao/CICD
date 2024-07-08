@@ -12,10 +12,10 @@ jobs:
         FILE_PATH="/Users/sswang/actions-runner/_work/GithubActionTest/GithubActionTest/README"
         if [ -f "$FILE_PATH" ]; then
             echo "file exists"
-            echo "{REPO_EXISTS}={true}" >> $GITHUB_ENV
+            echo "REPO_EXISTS=true" >> $GITHUB_ENV
         else
             echo "file not exists"
-            echo "{REPO_EXISTS}={false}" >> $GITHUB_ENV
+            echo "REPO_EXISTS=false" >> $GITHUB_ENV
         fi
     - name: Notifi checkout
       if: ${{ $REPO_EXISTS != true }}

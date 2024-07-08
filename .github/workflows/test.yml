@@ -12,23 +12,23 @@ jobs:
         FILE_PATH="/Users/sswang/actions-runner/_work/GithubActionTest/GithubActionTest/README"
         if [ -f "$FILE_PATH" ]; then
             echo "file exists"
-            echo "##[set-output name=fileExists;value=true]"
+            echo "{REPO_EXISTS}={true}" >> $GITHUB_ENV
         else
             echo "file not exists"
-            echo "##[set-output name=fileExists;value=false]"
+            echo "{REPO_EXISTS}={false}" >> $GITHUB_ENV
         fi
     - name: Notifi checkout
-      if: ${{ steps.check_file.outputs.fileExists != true }}
+      if: ${{ $REPO_EXISTS != true }}
       run: |
-        echo "Performing git checkout...${{ steps.check_file.outputs.fileExists }}"
+        echo "Performing git checkout...$REPO_EXISTS"
     - name: Checkout repo
-      if: ${{ steps.check_file.outputs.fileExists != true }}
+      if: ${{ $REPO_EXISTS != true }}
       uses: actions/checkout@v2
       with:
         repository: wangzitao/GithubActionTest
         path: .
     - name: Perform pull if directory exists
-      if: steps.check_dir.outputs.dir_exists == true
+      if: ${{ $REPO_EXISTS == true }}
       run: |
         echo "Performing git pull..."
         git pull

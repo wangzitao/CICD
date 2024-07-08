@@ -23,14 +23,16 @@ jobs:
             echo "File does not exist, will checkout another repo."
             echo "::set-output name=file_exists::false"
         fi
-    - name: Checkout repository(file does not exist)
+    - name: Notifi checkout
       if: ${{ steps.check_file.outputs.file_exists != 'true' }}
       run: |
-        echo "Performing checkout"
+        echo "begin checkout..."
+    - name: Checkout repository(file does not exist)
+      if: ${{ steps.check_file.outputs.file_exists != 'true' }}
       uses: actions/checkout@v2
       with:
         repository: wangzitao/GithubActionTest
-        path: Storage
+        path: repo
     - name: Perform pull if directory exists
       if: steps.check_dir.outputs.dir_exists == 'true'
       run: |

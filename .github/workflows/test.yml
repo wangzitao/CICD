@@ -9,12 +9,12 @@ jobs:
     - name: Check_file
       id: check_file    
       run: |
-        FILE_PATH="~/actions-runner/_work/GithubActionTest/GithubActionTest/ReadME"
+        FILE_PATH="/Users/sswang/actions-runner/_work/GithubActionTest/GithubActionTest/README"
         if [ -f "$FILE_PATH" ]; then
             echo "file exists"
             echo "##[set-output name=fileExists;value=true]"
         else
-            echo "file not exists" 
+            echo "file not exists"
             echo "##[set-output name=fileExists;value=false]"
         fi
     - name: Notifi checkout

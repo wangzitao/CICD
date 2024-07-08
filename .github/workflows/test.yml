@@ -6,30 +6,21 @@ jobs:
     name: My Job
     runs-on: self-hosted
     steps:
-    - name: Print a greeting
-      env:
-        MY_VAR: Hi there!
-        FIRST_NAME: Skyler
-        LAST_NAME: Wang
-        MY_SECRET: ${{ secrets.SS_SECRETS }}
-      run: |
-        echo $MY_VAR $FIRST_NAME $LAST_NAME. $MY_SECRET
     - name: Check_file
-      id: check_file
+      id: check_file    
       run: |
-        if [ -f "~/actions-runner/_work/GithubActionTest/GithubActionTest/ReadME" ]; then
-            echo "File exists, no need to checkout another repo."
-            echo "::set-output name=file_exists::true"
+        FILE_PATH="~/actions-runner/_work/GithubActionTest/GithubActionTest/ReadME"
+        if [ -f "$FILE_PATH" ]; then
+            echo "##[set-output name=fileExists;value=true]"
         else
-            echo "File does not exist, will checkout another repo."
-            echo "::set-output name=file_exists::false"
+            echo "##[set-output name=fileExists;value=false]"
         fi
     - name: Notifi checkout
-      if: ${{ steps.check_file.outputs.file_exists != 'true' }}
+      if: ${{ steps.check_file.outputs.fileExists != 'true' }}
       run: |
-        echo "Performing git checkout..."
+        echo "Performing git checkout... ${{ steps.check_file.outputs.fileExists }}"
     - name: Checkout repo
-      if: ${{ steps.check_file.outputs.file_exists != 'true' }}
+      if: ${{ steps.check_file.outputs.fileExists != 'true' }}
       uses: actions/checkout@v2
       with:
         repository: wangzitao/GithubActionTest

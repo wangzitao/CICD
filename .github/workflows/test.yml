@@ -11,14 +11,16 @@ jobs:
       run: |
         FILE_PATH="~/actions-runner/_work/GithubActionTest/GithubActionTest/ReadME"
         if [ -f "$FILE_PATH" ]; then
+            echo "file exists"
             echo "##[set-output name=fileExists;value=true]"
         else
+            echo "file not exists" 
             echo "##[set-output name=fileExists;value=false]"
         fi
     - name: Notifi checkout
       if: ${{ steps.check_file.outputs.fileExists != 'true' }}
       run: |
-        echo "Performing git checkout... ${{ steps.check_file.outputs.fileExists }}"
+        echo "Performing git checkout...${{ steps.check_file.outputs.fileExists }}"
     - name: Checkout repo
       if: ${{ steps.check_file.outputs.fileExists != 'true' }}
       uses: actions/checkout@v2

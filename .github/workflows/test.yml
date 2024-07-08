@@ -18,17 +18,16 @@ jobs:
             echo "REPO_EXISTS=false" >> $GITHUB_ENV
         fi
     - name: Notifi check result
-      if: ${{ env.REPO_EXISTS != true }}
       run: |
-        echo "Performing git checkout...$REPO_EXISTS"
+        echo "Performing git checkout...${REPO_EXISTS}"
     - name: Checkout repo
-      if: ${{ env.REPO_EXISTS != true }}
+      if: ${{ env.REPO_EXISTS != 'true' }}
       uses: actions/checkout@v2
       with:
         repository: wangzitao/GithubActionTest
         path: .
     - name: Perform pull if directory exists
-      if: ${{ env.REPO_EXISTS == true }}
+      if: ${{ env.REPO_EXISTS == 'true' }}
       run: |
         echo "Performing git pull..."
         git pull

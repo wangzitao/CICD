@@ -16,7 +16,7 @@ jobs:
         echo $MY_VAR $FIRST_NAME $LAST_NAME. $MY_SECRET
     - name: Checkout Update latest version
       run: |
-        if [ -f "~/sswang/action-runner/_work/GithubActionTest/GithubActionTest/test.txt" ]; then
+        if [ -f "~/action-runner/_work/GithubActionTest/GithubActionTest/test.txt" ]; then
             echo "File exists, no need to checkout another repo."
             echo "::set-output name=file_exists::true"
         else
@@ -41,5 +41,5 @@ jobs:
     - name: List file
       run: |
         REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d'/' -f2)
-        ls /Users/runner/_work/$REPO_NAME/$REPO_NAME
+        ls ~/actions-runner/_work/$REPO_NAME/$REPO_NAME/
 

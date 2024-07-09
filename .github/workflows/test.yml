@@ -1,4 +1,4 @@
-name: Greeting from Skyler
+name: CICD
 on: push
 
 jobs:
@@ -19,7 +19,8 @@ jobs:
         fi
     - name: Notifi check result
       run: |
-        echo "Performing git checkout...${REPO_EXISTS}"
+        echo "Performing git checkout..."
+        echo $REPO_EXISTS
     - name: Checkout repo
       if: ${{ env.REPO_EXISTS != 'true' }}
       uses: actions/checkout@v2
